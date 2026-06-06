@@ -619,20 +619,40 @@
       color: var(--ink4);
     }
 
-    /* Beehiiv embed overrides */
-    #beehiiv-embed-outer-div { background: transparent !important; padding: 0 !important; }
-    #beehiiv-embed-inner-div { background: transparent !important; padding: 0 !important; }
-    .beehiiv-embed-form { background: transparent !important; }
+    /* Beehiiv embed overrides — strip all chrome */
+    [data-beehiiv-form] > div,
+    [data-beehiiv-form] iframe { 
+      background: transparent !important; 
+      box-shadow: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      margin: 0 auto !important;
+    }
+    [data-beehiiv-form] h1,
+    [data-beehiiv-form] h2,
+    [data-beehiiv-form] h3,
+    [data-beehiiv-form] p:not(.form-note),
+    [data-beehiiv-form] img,
+    [data-beehiiv-form] .branding,
+    [data-beehiiv-form] [class*="logo"],
+    [data-beehiiv-form] [class*="title"],
+    [data-beehiiv-form] [class*="header"],
+    [data-beehiiv-form] [class*="description"] { display: none !important; }
     [data-beehiiv-form] input[type="email"] {
       font-family: var(--font-body) !important;
       font-size: 14px !important;
       background: var(--surface) !important;
       border: 1px solid var(--alternate) !important;
+      border-right: none !important;
       border-radius: 2px 0 0 2px !important;
       color: var(--ink) !important;
       padding: 14px 20px !important;
+      outline: none !important;
+      flex: 1 !important;
     }
-    [data-beehiiv-form] button[type="submit"] {
+    [data-beehiiv-form] button[type="submit"],
+    [data-beehiiv-form] input[type="submit"] {
       font-family: var(--font-body) !important;
       font-size: 13px !important;
       font-weight: 500 !important;
@@ -643,11 +663,14 @@
       border-radius: 0 2px 2px 0 !important;
       padding: 14px 24px !important;
       border: none !important;
+      cursor: pointer !important;
     }
-    [data-beehiiv-form] h1,
-    [data-beehiiv-form] h2,
-    [data-beehiiv-form] p { display: none !important; }
-    [data-beehiiv-form] img { display: none !important; }
+    [data-beehiiv-form] form {
+      display: flex !important;
+      max-width: 440px !important;
+      margin: 0 auto !important;
+      background: transparent !important;
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
