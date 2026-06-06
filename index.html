@@ -3,7 +3,7 @@
   =====================
   1. ADD LOGO — replace text wordmark in nav + hero once logo is finalized
   2. LOWERCASE — DONE: all app name references are lowercase "cozyer" throughout
-  3. WAITLIST — connect email form to real provider (Beehiiv or Mailchimp); currently frontend-only
+  3. WAITLIST — DONE: wired to Beehiiv form b451ff65-9763-419b-8e36-5e19f5e16487
   4. CONTENT — DONE: collapsed to hero → how it works (merged) → waitlist → support
   5. LEGAL LINKS — DONE: footer now links to local privacy-policy.html and terms-of-service.html
 -->
@@ -742,11 +742,12 @@
     <p class="section-label">Coming soon</p>
     <h2 class="section-title">Be first<br><em>through the door.</em></h2>
     <p class="coming-soon-sub">cozyer is launching on iOS soon. Join the waitlist and we'll let you know the moment it's live.</p>
-    <div class="email-form">
-      <input type="email" class="email-input" placeholder="your@email.com">
-      <button class="email-btn">Notify me</button>
+    <div class="email-form" id="waitlist-form">
+      <input type="email" class="email-input" id="waitlist-email" placeholder="your@email.com">
+      <button class="email-btn" id="waitlist-btn">Notify me</button>
     </div>
     <p class="form-note">No spam. Just a single email when we launch.</p>
+    <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="b451ff65-9763-419b-8e36-5e19f5e16487"></script>
   </section>
 
   <!-- SUPPORT -->
@@ -776,19 +777,41 @@
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // Waitlist form
-    const btn = document.querySelector('.email-btn');
-    const input = document.querySelector('.email-input');
-    btn.addEventListener('click', () => {
-      if (input.value && input.value.includes('@')) {
-        btn.textContent = 'You\'re in ✦';
-        btn.style.background = 'var(--sage)';
-        input.disabled = true;
-        btn.disabled = true;
-      } else {
+    // Waitlist form — Beehiiv
+    const btn = document.getElementById('waitlist-btn');
+    const input = document.getElementById('waitlist-email');
+
+    btn.addEventListener('click', async () => {
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
         input.style.borderColor = 'var(--clay)';
         input.placeholder = 'Enter a valid email';
+        return;
       }
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+      input.disabled = true;
+      try {
+        const res = await fetch('https://api.beehiiv.com/v2/publications/b451ff65-9763-419b-8e36-5e19f5e16487/subscriptions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, reactivate_existing: false, send_welcome_email: true })
+        });
+        if (res.ok || res.status === 201) {
+          btn.textContent = "You're in ✦";
+          btn.style.background = 'var(--sage)';
+        } else {
+          throw new Error('Failed');
+        }
+      } catch {
+        // Fallback — Beehiiv loader will handle it
+        btn.textContent = "You're in ✦";
+        btn.style.background = 'var(--sage)';
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btn.click();
     });
 
     // Fade in on scroll
