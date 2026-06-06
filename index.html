@@ -748,7 +748,6 @@
       <button class="email-btn" id="waitlist-btn">Notify me</button>
     </div>
     <p class="form-note">No spam. Just a single email when we launch.</p>
-    <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="b451ff65-9763-419b-8e36-5e19f5e16487"></script>
   </section>
 
   <!-- SUPPORT -->
@@ -772,7 +771,16 @@
   </footer>
 
   <script>
-    // Nav scroll effect
+    // Hide Beehiiv default embed
+    const hideBeehiiv = () => {
+      const beehiivEl = document.querySelector('[data-beehiiv-form]');
+      if (beehiivEl) {
+        beehiivEl.style.display = 'none';
+      } else {
+        setTimeout(hideBeehiiv, 300);
+      }
+    };
+    hideBeehiiv();
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
