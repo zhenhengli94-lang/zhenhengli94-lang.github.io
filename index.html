@@ -1,0 +1,807 @@
+<!--
+  COZYER WEBSITE — TODOS
+  =====================
+  1. ADD LOGO — replace text wordmark in nav + hero once logo is finalized
+  2. LOWERCASE — change all "Cozyer" to "cozyer" throughout (softer, more modern feel — agreed)
+  3. WAITLIST — connect email form to real provider (Beehiiv or Mailchimp); currently frontend-only
+  4. CONTENT — DONE: collapsed to hero → how it works (merged) → waitlist → support
+  5. LEGAL LINKS — DONE: footer now links to local privacy-policy.html and terms-of-service.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozyer — See It, Then Live It</title>
+  <meta name="description" content="Redesign your room, then make it yours for real. Cozyer gives you the visual, a step-by-step plan, and the shopping list to bring it to life.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8A6A3A;
+      --primary-deep: #6E5330;
+      --primary-tint: #EFE7D7;
+      --on-primary: #FFFFFF;
+      --clay: #C8654A;
+      --clay-deep: #A8462F;
+      --sage: #6E9079;
+      --sage-tint: #E7EDE6;
+      --bg: #F6F3EE;
+      --bg2: #EFEAE0;
+      --surface: #FDFCFA;
+      --surface2: #F8F4ED;
+      --alternate: #EBE5D8;
+      --ink: #1E1A14;
+      --ink2: #4A4234;
+      --ink3: #6B5F4A;
+      --ink4: #A89B85;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Quicksand', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(246, 243, 238, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    nav.scrolled { border-color: var(--alternate); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      height: 32px;
+    }
+
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-logo span { color: var(--clay); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--clay); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(200, 101, 74, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(138, 106, 58, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 60% 70%, rgba(110, 144, 121, 0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 24px;
+      mix-blend-mode: multiply;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.1s;
+    }
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: var(--font-body);
+      font-size: clamp(52px, 9vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 400;
+      color: var(--ink3);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.0s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ink);
+      color: var(--on-primary);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--ink2); transform: translateY(-1px); }
+
+    .btn-secondary {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink3);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--alternate);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--clay); border-color: var(--clay); }
+
+    .hero-illustration {
+      width: 100%;
+      max-width: 700px;
+      margin: 48px auto 0;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.2s;
+      pointer-events: none;
+    }
+
+    .hero-illustration img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.4s;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--ink4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    .scroll-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink4);
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 120px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 64px;
+      max-width: 600px;
+    }
+
+    .section-title em { font-style: normal; color: var(--primary); }
+
+    .features-intro {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--alternate);
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 48px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: var(--surface2); }
+
+    .feature-card-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature-img {
+      width: 100%;
+      height: auto;
+      max-height: 280px;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .feature-img-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .feature-img-pair img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    /* Alternate image left/right per card */
+    .feature-card:nth-child(even) .feature-card-text { order: 2; }
+    .feature-card:nth-child(even) .feature-img-wrap { order: 1; }
+
+    .feature-number {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      color: var(--primary-tint);
+      line-height: 1;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.75;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clay);
+      font-weight: 500;
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      background: var(--bg2);
+      padding: 120px 48px;
+    }
+
+    .how-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-top: 64px;
+    }
+
+    .step {
+      position: relative;
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--clay);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.75;
+    }
+
+    .step-line {
+      width: 32px;
+      height: 1px;
+      background: var(--clay);
+      margin-bottom: 20px;
+    }
+
+    /* COMING SOON */
+    .coming-soon {
+      padding: 120px 48px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .coming-soon .section-title {
+      margin: 0 auto 20px;
+      text-align: center;
+      max-width: 100%;
+    }
+
+    .coming-soon-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto 16px;
+    }
+
+    .email-input {
+      flex: 1;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      background: var(--surface);
+      border: 1px solid var(--alternate);
+      border-right: none;
+      border-radius: 2px 0 0 2px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .email-input:focus { border-color: var(--primary); }
+    .email-input::placeholder { color: var(--ink4); }
+
+    .email-btn {
+      padding: 14px 24px;
+      background: var(--clay);
+      color: white;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 0 2px 2px 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .email-btn:hover { background: var(--clay-deep); }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--ink4);
+      letter-spacing: 0.02em;
+    }
+
+    .app-store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 40px;
+      padding: 12px 24px;
+      background: var(--ink);
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .app-store-badge:hover { background: var(--ink2); }
+
+    .badge-sub { font-size: 10px; opacity: 0.7; display: block; letter-spacing: 0.06em; text-transform: uppercase; }
+    .badge-main { font-size: 15px; font-weight: 500; display: block; }
+
+    /* SUPPORT */
+    .support {
+      background: var(--bg2);
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .support-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .support h2 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .support p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .support-email {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--clay);
+      text-decoration: none;
+      border-bottom: 1px solid var(--clay);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .support-email:hover { color: var(--clay-deep); border-color: var(--clay-deep); }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--alternate);
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      height: 24px;
+    }
+
+    .footer-logo img {
+      height: 24px;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .footer-logo span { color: var(--clay); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--ink4);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--clay); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--ink4);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .features { padding: 80px 24px; }
+      .feature-card { grid-template-columns: 1fr; gap: 24px; }
+      .feature-card:nth-child(even) .feature-card-text { order: 1; }
+      .feature-card:nth-child(even) .feature-img-wrap { order: 2; }
+      .coming-soon { padding: 80px 24px; }
+      .support { padding: 60px 24px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
+      .email-form { flex-direction: column; }
+      .email-input { border-right: 1px solid var(--alternate); border-bottom: none; border-radius: 2px 2px 0 0; }
+      .email-btn { border-radius: 0 0 2px 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="#" class="nav-logo"><img src="cozyer-logo.png" alt="cozyer"></a>
+    <ul class="nav-links">
+      <li><a href="#features">How it works</a></li>
+      <li><a href="#support">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <img src="cozyer-icon.png" alt="" class="hero-icon">
+    <p class="hero-eyebrow">Coming soon to iOS</p>
+    <h1 class="hero-title">See it.<br><em>Then live it.</em></h1>
+    <p class="hero-tagline">Your room, redesigned — with a plan to match.</p>
+    <p class="hero-sub">Upload a photo of your space. Get a transformed visual, a step-by-step action plan, and a shopping list to make it real.</p>
+    <div class="hero-cta">
+      <a href="#waitlist" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 7L7 13M1 7h12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Join the waitlist
+      </a>
+      <a href="#features" class="btn-secondary">See how it works</a>
+    </div>
+    <div class="hero-illustration">
+      <img src="spaceshift-1-hero-brackets.svg" alt="Room before redesign">
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS + WHAT YOU GET (merged) -->
+  <section class="features" id="features">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Upload a photo.<br><em>Get a real plan.</em></h2>
+    <p class="features-intro">Choose your style, budget, and how much you want to change — in moments, your room is redesigned with everything you need to actually do it.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-card-text">
+          <span class="feature-number">01</span>
+          <h3 class="feature-title">See it</h3>
+          <p class="feature-desc">Upload any room photo and get a transformed visual instantly. Toggle between before and after. Tweak until it feels right.</p>
+          <span class="feature-tag">Instant visualization</span>
+        </div>
+        <div class="feature-img-wrap">
+          <div class="feature-img-pair">
+            <img src="spaceshift-2a-before-card.svg" alt="Before redesign">
+            <img src="spaceshift-2b-after-card.svg" alt="After redesign">
+          </div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-text">
+          <span class="feature-number">02</span>
+          <h3 class="feature-title">Plan it</h3>
+          <p class="feature-desc">Every redesign comes with a step-by-step action plan — a real checklist that tells you exactly where to start. No guesswork.</p>
+          <span class="feature-tag">Action plan + checklist</span>
+        </div>
+        <div class="feature-img-wrap">
+          <img src="spaceshift-3b-task-card.svg" alt="Task checklist" class="feature-img">
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-text">
+          <span class="feature-number">03</span>
+          <h3 class="feature-title">Shop it</h3>
+          <p class="feature-desc">Furniture and décor matched to your style and budget, with a ready-made shopping list built right into your plan.</p>
+          <span class="feature-tag">Curated shopping list</span>
+        </div>
+        <div class="feature-img-wrap">
+          <img src="spaceshift-3c-product-card.svg" alt="Product recommendation" class="feature-img">
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-text">
+          <span class="feature-number">04</span>
+          <h3 class="feature-title">Live it</h3>
+          <p class="feature-desc">Save your projects, come back when you're ready, and make it happen at your own pace. Your plan is always waiting.</p>
+          <span class="feature-tag">Projects + history</span>
+        </div>
+        <div class="feature-img-wrap">
+          <img src="spaceshift-3a-styled-bedroom.svg" alt="Styled redesigned bedroom" class="feature-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST / COMING SOON -->
+  <section class="coming-soon" id="waitlist">
+    <p class="section-label">Coming soon</p>
+    <h2 class="section-title">Be first<br><em>through the door.</em></h2>
+    <p class="coming-soon-sub">Cozyer is launching on iOS soon. Join the waitlist and we'll let you know the moment it's live.</p>
+    <div class="email-form">
+      <input type="email" class="email-input" placeholder="your@email.com">
+      <button class="email-btn">Notify me</button>
+    </div>
+    <p class="form-note">No spam. Just a single email when we launch.</p>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="support" id="support">
+    <div class="support-inner">
+      <h2>Need help?</h2>
+      <p>We're a small team and we genuinely want to hear from you — whether it's a question, a bug, or just feedback on your experience.</p>
+      <a href="mailto:support@cozyerdesign.com" class="support-email">support@cozyerdesign.com</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo"><img src="cozyer-logo.png" alt="cozyer"></a>
+    <ul class="footer-links">
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="terms-of-service.html">Terms of Service</a></li>
+      <li><a href="#support">Support</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Cozyer Design</p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Waitlist form
+    const btn = document.querySelector('.email-btn');
+    const input = document.querySelector('.email-input');
+    btn.addEventListener('click', () => {
+      if (input.value && input.value.includes('@')) {
+        btn.textContent = 'You\'re in ✦';
+        btn.style.background = 'var(--sage)';
+        input.disabled = true;
+        btn.disabled = true;
+      } else {
+        input.style.borderColor = 'var(--clay)';
+        input.placeholder = 'Enter a valid email';
+      }
+    });
+
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.style.animation = 'fadeUp 0.7s ease forwards';
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .step').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

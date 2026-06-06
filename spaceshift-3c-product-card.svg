@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 152" width="480" height="152">
+  <title>SpaceShift — Stage 3C — Product card</title>
+  <defs>
+    <filter id="pcShadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"></feGaussianBlur>
+      <feOffset dx="0" dy="4"></feOffset>
+      <feComponentTransfer><feFuncA type="linear" slope="0.10"></feFuncA></feComponentTransfer>
+      <feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+    <linearGradient id="prodBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F1E5CC"></stop><stop offset="1" stop-color="#E0CDA6"></stop>
+    </linearGradient>
+    <clipPath id="prodClip2"><rect x="20" y="20" width="112" height="112" rx="14"></rect></clipPath>
+  </defs>
+
+  
+  <rect x="10" y="10" width="460" height="132" rx="20" fill="#FDFBF7" filter="url(#pcShadow)"></rect>
+
+  
+  <g clip-path="url(#prodClip2)">
+    <rect x="20" y="20" width="112" height="112" fill="url(#prodBg)"></rect>
+    
+    <g transform="translate(76,76) rotate(-12)">
+      <rect x="-40" y="-26" width="80" height="52" rx="4" fill="#D9BD8A"></rect>
+      <line x1="-40" y1="-14" x2="40" y2="-14" stroke="#A07D4A" stroke-width="1.2" opacity="0.75"></line>
+      <line x1="-40" y1="0" x2="40" y2="0" stroke="#A07D4A" stroke-width="1.2" opacity="0.75"></line>
+      <line x1="-40" y1="14" x2="40" y2="14" stroke="#A07D4A" stroke-width="1.2" opacity="0.75"></line>
+      <rect x="-40" y="-26" width="3" height="52" fill="#A07D4A" opacity="0.55"></rect>
+      <rect x="37" y="-26" width="3" height="52" fill="#A07D4A" opacity="0.55"></rect>
+      <rect x="-2" y="-26" width="3" height="52" fill="#A07D4A" opacity="0.45"></rect>
+      
+      <path d="M-34 -22 L 34 -22" stroke="#F2DDAE" stroke-width="2" opacity="0.6"></path>
+    </g>
+  </g>
+
+  
+  
+  <text x="152" y="42" font-family="&#39;JetBrains Mono&#39;, ui-monospace, monospace" font-size="11" font-weight="500" fill="#7A7F8A" letter-spacing="0.14em">MUJI</text>
+
+  
+  <text x="152" y="74" font-family="&#39;General Sans&#39;, -apple-system, sans-serif" font-size="20" font-weight="600" fill="#1A1F2B" letter-spacing="-0.015em">Bamboo drawer dividers</text>
+
+  
+  <g transform="translate(152,90)" font-family="&#39;General Sans&#39;, -apple-system, sans-serif">
+    <text x="0" y="22" font-size="18" font-weight="600" fill="#1A1F2B" letter-spacing="-0.01em">$24</text>
+    <text x="44" y="22" font-size="13" font-weight="500" fill="#7A7F8A">· set of 4</text>
+  </g>
+
+  
+  <g transform="translate(414,56)">
+    <rect x="0" y="0" width="40" height="40" rx="12" fill="#1A1F2B"></rect>
+    
+    <g stroke="#FFFFFF" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 16 L 12 28 Q 12 30 14 30 L 26 30 Q 28 30 28 28 L 28 16"></path>
+      <path d="M16 16 Q 16 11 20 11 Q 24 11 24 16"></path>
+    </g>
+    
+    <g stroke="#D97757" stroke-width="2.2" stroke-linecap="round">
+      <line x1="20" y1="19" x2="20" y2="25"></line>
+      <line x1="17" y1="22" x2="23" y2="22"></line>
+    </g>
+  </g>
+</svg>
