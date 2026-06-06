@@ -3,7 +3,7 @@
   =====================
   1. ADD LOGO — replace text wordmark in nav + hero once logo is finalized
   2. LOWERCASE — DONE: all app name references are lowercase "cozyer" throughout
-  3. WAITLIST — DONE: wired to Beehiiv form b451ff65-9763-419b-8e36-5e19f5e16487
+  3. WAITLIST — DONE: wired to Brevo form via no-cors POST
   4. CONTENT — DONE: collapsed to hero → how it works (merged) → waitlist → support
   5. LEGAL LINKS — DONE: footer now links to local privacy-policy.html and terms-of-service.html
 -->
@@ -619,58 +619,43 @@
       color: var(--ink4);
     }
 
-    /* Beehiiv embed overrides — strip all chrome */
-    [data-beehiiv-form] > div,
-    [data-beehiiv-form] iframe { 
-      background: transparent !important; 
-      box-shadow: none !important;
-      border: none !important;
-      border-radius: 0 !important;
-      padding: 0 !important;
-      margin: 0 auto !important;
+    /* Waitlist form */
+    .email-form {
+      display: flex;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto 16px;
     }
-    [data-beehiiv-form] h1,
-    [data-beehiiv-form] h2,
-    [data-beehiiv-form] h3,
-    [data-beehiiv-form] p:not(.form-note),
-    [data-beehiiv-form] img,
-    [data-beehiiv-form] .branding,
-    [data-beehiiv-form] [class*="logo"],
-    [data-beehiiv-form] [class*="title"],
-    [data-beehiiv-form] [class*="header"],
-    [data-beehiiv-form] [class*="description"] { display: none !important; }
-    [data-beehiiv-form] input[type="email"] {
-      font-family: var(--font-body) !important;
-      font-size: 14px !important;
-      background: var(--surface) !important;
-      border: 1px solid var(--alternate) !important;
-      border-right: none !important;
-      border-radius: 2px 0 0 2px !important;
-      color: var(--ink) !important;
-      padding: 14px 20px !important;
-      outline: none !important;
-      flex: 1 !important;
+    .email-input {
+      flex: 1;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      background: var(--surface);
+      border: 1px solid var(--alternate);
+      border-right: none;
+      border-radius: 2px 0 0 2px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
     }
-    [data-beehiiv-form] button[type="submit"],
-    [data-beehiiv-form] input[type="submit"] {
-      font-family: var(--font-body) !important;
-      font-size: 13px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.06em !important;
-      text-transform: uppercase !important;
-      background: var(--clay) !important;
-      color: white !important;
-      border-radius: 0 2px 2px 0 !important;
-      padding: 14px 24px !important;
-      border: none !important;
-      cursor: pointer !important;
+    .email-input:focus { border-color: var(--primary); }
+    .email-input::placeholder { color: var(--ink4); }
+    .email-btn {
+      padding: 14px 24px;
+      background: var(--clay);
+      color: white;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 0 2px 2px 0;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    [data-beehiiv-form] form {
-      display: flex !important;
-      max-width: 440px !important;
-      margin: 0 auto !important;
-      background: transparent !important;
-    }
+    .email-btn:hover { background: var(--clay-deep); }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -793,8 +778,11 @@
     <p class="section-label">Coming soon</p>
     <h2 class="section-title">Be first<br><em>through the door.</em></h2>
     <p class="coming-soon-sub">cozyer is launching on iOS soon. Join the waitlist and we'll let you know the moment it's live.</p>
-    <div style="max-width:440px; margin: 0 auto 16px;">
-      <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="b451ff65-9763-419b-8e36-5e19f5e16487"></script>
+    <div id="brevo-success" style="display:none; color:var(--sage); font-size:15px; margin-bottom:16px;">You're in ✦ We'll be in touch.</div>
+    <div id="brevo-error" style="display:none; color:var(--clay); font-size:14px; margin-bottom:16px;">Something went wrong — please try again.</div>
+    <div class="email-form">
+      <input type="email" class="email-input" id="waitlist-email" placeholder="your@email.com" required>
+      <button class="email-btn" id="waitlist-btn">Notify me</button>
     </div>
     <p class="form-note">No spam. Just a single email when we launch.</p>
   </section>
@@ -820,7 +808,48 @@
   </footer>
 
   <script>
-    const nav = document.getElementById('nav');
+    // Waitlist form — Brevo
+    const btn = document.getElementById('waitlist-btn');
+    const input = document.getElementById('waitlist-email');
+    const successMsg = document.getElementById('brevo-success');
+    const errorMsg = document.getElementById('brevo-error');
+
+    btn.addEventListener('click', async () => {
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        input.style.borderColor = 'var(--clay)';
+        input.placeholder = 'Enter a valid email';
+        return;
+      }
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+      input.disabled = true;
+
+      const formData = new FormData();
+      formData.append('EMAIL', email);
+      formData.append('email_address_check', '');
+      formData.append('locale', 'en');
+
+      try {
+        await fetch('https://5fe66858.sibforms.com/serve/MUIFAIQoafESz66EAawKxOf1OdbBYdiMfpl5KpeKh3rT4zZv_kascjwQkLtU7A5PKwi83cL9b63YdW-HlAeCQpUb363UhAxcgt8OWQlqDcHt_eqkUWUSQxpseDKaKAyf80bddnuzZlDp_gLugrGNsIaUm4t6gSg6DSlumQ0qxcviHyJ-h6HZhQKyI9ETCtmC2-ux8mZNl9yjiTLL-w==', {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        });
+        // no-cors means we can't read response — assume success
+        document.querySelector('.email-form').style.display = 'none';
+        successMsg.style.display = 'block';
+      } catch {
+        btn.textContent = 'Notify me';
+        btn.disabled = false;
+        input.disabled = false;
+        errorMsg.style.display = 'block';
+      }
+    });
+
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); });
+
+    // Nav scroll effect
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
